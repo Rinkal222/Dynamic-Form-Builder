@@ -10,19 +10,21 @@ A **Dynamic Form Builder** application built with **Angular**, **Bootstrap**, an
   - Dropdown
   - Checkbox
   - Radio Buttons
-- **Validation Rules**: Required, Min/Max Length (for text fields only).
+- **Validation Rules**: Required.
 - **Real-Time Form Update**: Changes reflect instantly in the preview.
-- **Error Handling**: Prevents submission if required fields are empty.
-- **Bootstrap & Angular Material UI**: Clean and professional design.
-- **Form Submission**: Logs form data to the console with a success message.
-
+- **Error Handling**: Prevents submission if required fields are empty, shows error messages dynamically.
+- **Drag & Drop Reordering**: Easily reorder form fields using drag-and-drop functionality.
+- **Multi-Step Form Support**: Break long forms into multiple steps for better user experience.
+- **Bootstrap & Angular Material UI**: Clean, modern, and professional design.
+- **Form Submission**: form data to the opens a dialog box upon successful submission.
+  
 ---
 
 ## 📌 Installation & Setup
 
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/YOUR-USERNAME/Dynamic-Form-Builder.git
+git clone https://github.com/Rinkal222/Dynamic-Form-Builder.git
 cd Dynamic-Form-Builder
 ```
 
