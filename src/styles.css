@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+.bg-toolbar {
+    background-color: #FDFBEE !important;
+    color: rgb(0, 0, 0) !important;
+}
+.bg-toolbar-btn {
+    background-color: #57B4BA !important;
+    color: white !important;
+}
+.txt-primary{
+    color: #015551 !important;;
+}
+.bg-btn-primary {
+    background-color: #015551 !important;
+    color: white !important;
+}
+
+.bg-btn-secondary-primary {
+    background-color: #EB5B00 !important;
+    color: white !important;
+}

@@ -1,0 +1,82 @@
+<div class="container mt-5" *ngIf="formCreated">
+    <div class="card shadow-lg p-4">
+        <h2 class="mb-4  bg-toolbar-btn fw-bold text-center p-3 rounded">Form Preview</h2>
+
+        <form *ngIf="fields.length > 0" [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div *ngFor="let field of fields" class="col-md-6 col-sm-12 mb-4">
+                    <mat-label>{{ field.label }} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
+
+                    <!-- Text Input -->
+                    <mat-form-field appearance="outline" class="w-100" *ngIf="field.type === 'text'">
+                        <mat-label>{{ field.label }} <span *ngIf="field.required"
+                                class="text-danger"></span></mat-label>
+                        <input matInput [formControlName]="field.label" [placeholder]="field.placeholder ?? ''">
+                        <mat-error *ngIf="dynamicForm.get(field.label)?.hasError('required')">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Textarea -->
+                    <mat-form-field appearance="outline" class="w-100" *ngIf="field.type === 'textarea'">
+                        <mat-label>{{ field.label }} <span *ngIf="field.required"
+                                class="text-danger"></span></mat-label>
+                        <textarea matInput rows="3" [formControlName]="field.label"
+                            [placeholder]="field.placeholder ?? ''"></textarea>
+                        <mat-error *ngIf="dynamicForm.get(field.label)?.hasError('required')">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Dropdown -->
+                    <mat-form-field appearance="outline" class="w-100" *ngIf="field.type === 'select'">
+                        <mat-label>{{ field.label }} <span *ngIf="field.required"
+                                class="text-danger"></span></mat-label>
+                        <mat-select [formControlName]="field.label" (selectionChange)="onDropdownChange(field.label)">
+                            <mat-option [value]="null" disabled selected>-- Select an option --</mat-option>
+                            <mat-option *ngFor="let option of field.options" [value]="option">
+                                {{ option }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="dynamicForm.get(field.label)?.hasError('required')">
+                            {{ field.label }} is required!
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Checkbox Field -->
+                    <div *ngIf="field.type === 'checkbox'" class="d-flex flex-wrap justify-content-between">
+                        <div *ngFor="let option of field.options" class="form-check ">
+                            <input type="checkbox" class="form-check-input "
+                                [checked]="dynamicForm.get(field.label)?.value.includes(option)"
+                                (change)="updateCheckboxValue(field.label, option, $event)">
+                            <label class="form-check-label">{{ option }}</label>
+                        </div>
+
+                        <!-- Validation Error Message -->
+                        <mat-error
+                            *ngIf="dynamicForm.get(field.label)?.invalid && dynamicForm.get(field.label)?.touched">
+                            {{ field.label }} is required! Please select at least one option.
+                        </mat-error>
+                    </div>
+
+                    <!-- Radio Buttons -->
+                    <div *ngIf="field.type === 'radio'" class="d-flex flex-wrap gap-3 mt-2 align-items-center">
+                        <div *ngFor="let option of field.options" class="form-check d-flex align-items-center">
+                            <input type="radio" class="form-check-input me-2" [value]="option"
+                                [formControlName]="field.label">
+                            <label class="form-check-label">{{ option }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" mt-3 d-flex justify-content-center">
+                <div class="col-6">
+                    <button type="submit" class="btn bg-btn-primary w-100 mb-2" [disabled]="!dynamicForm.valid">
+                        <i class="bi bi-send"></i> Submit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

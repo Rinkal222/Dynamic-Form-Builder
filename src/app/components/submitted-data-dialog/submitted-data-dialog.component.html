@@ -1,0 +1,12 @@
+<h2 mat-dialog-title class="text-center">Form Data</h2>
+<mat-dialog-content class="mat-typography">
+  <table class="table table-bordered">
+    <tr *ngFor="let key of formData | keyvalue">
+      <td class="fw-bold ">{{ key.key }}</td>
+      <td>{{ key.value }}</td>
+    </tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button class="txt-primary" (click)="closeDialog()">Close</button>
+</mat-dialog-actions>

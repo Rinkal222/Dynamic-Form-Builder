@@ -1,0 +1,26 @@
+.btn-close-red {
+    filter: invert(29%) sepia(94%) saturate(7457%) hue-rotate(358deg) brightness(104%) contrast(115%);
+    opacity: 1;
+}
+.btn-close-red:hover {
+    filter: brightness(100%);
+    background-color:  invert(29%) sepia(94%) saturate(7457%) hue-rotate(358deg) brightness(104%) contrast(115%);
+    opacity: 0.5;
+}
+.cdk-drag-placeholder {
+    opacity: 0.3;
+  }
+  
+  .cdk-drag-preview {
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cdk-drag {
+    cursor: grab;
+  }
+  
+  .cdk-drag:active {
+    cursor: grabbing;
+  }
+  

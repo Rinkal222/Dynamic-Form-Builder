@@ -1,0 +1,113 @@
+<div class=" w-100 p-3  mb-4">
+      <nav class="navbar pt-3 pb-3 navbar-dark bg-dark shadow fixed-top">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <!-- Logo / Title -->
+            <h2 class="text-white m-0 fw-bold">Dynamic Form Builder</h2>
+    
+            <!-- Buttons Group -->
+            <div class="d-flex gap-3">
+                <!-- Save Template -->
+                <button class="btn btn-success fw-bold px-4 d-flex align-items-center gap-2" (click)="saveTemplate()">
+                    <i class="fas fa-save"></i> Save
+                </button>
+    
+                <!-- Load Template -->
+                <button class="btn btn-info fw-bold px-4 d-flex align-items-center gap-2 text-white" (click)="loadTemplate()">
+                    <i class="fas fa-upload"></i> Load
+                </button>
+    
+                <!-- Clear Form -->
+                <button class="btn btn-danger fw-bold px-4 d-flex align-items-center gap-2" (click)="clearForm()">
+                    <i class="fas fa-trash-alt"></i> Clear
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    
+
+    <!-- Buttons to Add Fields -->
+    <div class="container mt-4 pt-5">
+        <div class="row g-2 justify-content-center p-3">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <button class="btn w-100 bg-toolbar-btn" (click)="addField('text')">Text Input</button>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <button class="btn w-100 bg-toolbar-btn" (click)="addField('textarea')">Textarea</button>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <button class="btn w-100 bg-toolbar-btn" (click)="addField('select')">Dropdown</button>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <button class="btn w-100 bg-toolbar-btn" (click)="addField('checkbox')">Checkbox</button>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <button class="btn w-100 bg-toolbar-btn" (click)="addField('radio')">Radio</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- List of Added Fields -->
+    <div cdkDropList (cdkDropListDropped)="drop($event)" class="w-100" [cdkDropListDisabled]="!formCreated">
+        <div class="row mt-4 ">
+            <div class="col-md-6" *ngFor="let field of fields" cdkDrag>
+                <div class="card p-3 mb-3 shadow-sm">
+                    <h5 class="card-title">{{ field.label }} <small class="text-muted">({{ field.type }})</small></h5>
+                    <!-- Label Input -->
+                    <input type="text" [(ngModel)]="field.label" class="form-control mb-2"
+                        placeholder="Enter field label">
+                    <!-- Placeholder Input -->
+                    <input type="text" [(ngModel)]="field.placeholder" class="form-control mb-2"
+                        placeholder="Enter filed  Placeholder"
+                        *ngIf="field.type === 'text' || field.type === 'textarea'">
+                    <!-- Required Checkbox -->
+                    <div class="form-check mb-2">
+                        <input type="checkbox" [(ngModel)]="field.required" class="form-check-input">
+                        <label class="form-check-label">Required</label>
+                    </div>
+                    <!-- Dropdown Field -->
+                    <div *ngIf="field.type === 'select'">
+                        <label>{{ field.label || 'Dropdown Field' }}</label>
+                        <div class="input-group mb-2">
+                            <input type="text" #optionInput class="form-control" placeholder="Option Name">
+                            <button class="btn btn-primary"
+                                (click)="addOption(field, optionInput.value); optionInput.value=''">Add</button>
+                        </div>
+                        <select class="form-control mb-2" [(ngModel)]="field.selectedValue">
+                            <option [value]="null" disabled selected>-- Select an option --</option>
+                            <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
+                        </select>
+                    </div>
+                    <!-- Checkbox and Radio Options -->
+                    <div *ngIf="field.type === 'checkbox' || field.type === 'radio'">
+                        <label>Add Options:</label>
+                        <div class="input-group mb-2">
+                            <input type="text" #inputRef class="form-control" placeholder="Option Name">
+                            <button class="btn btn-primary"
+                                (click)="addOption(field, inputRef.value); inputRef.value=''">Add</button>
+                        </div>
+                        <div *ngFor="let option of field.options; let i = index" class="d-flex align-items-center mb-1">
+                            <input [type]="field.type" name="group{{ field.id }}" class="me-2">
+                            <span class="me-2">{{ option }}</span>
+                            <button class="btn btn-sm btn-danger ps-2 pe-2" (click)="removeOption(field, i)">X</button>
+                        </div>
+                    </div>
+                    <!-- Remove Field Button -->
+                    <button type="button" class="btn-close btn-close-red position-absolute top-0 end-0 m-2"
+                        (click)="removeField(field.id)" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <!-- Show message if no fields are added -->
+        <div *ngIf="fields.length === 0" class="d-flex flex-column justify-content-center align-items-center">
+            <h5 class="fw-bold text-info">Create Your Dynamic Form</h5>
+            <p class="m-0 text-muted">Start by adding fields to generate your form</p>
+        </div>
+        <!-- Generate Form Button -->
+        <div class="mt-3 d-flex justify-content-center">
+            <button mat-raised-button class="btn bg-btn-primary w-50 mb-2" *ngIf="fields.length > 0 && !formCreated"
+                (click)="validateFormBeforeGeneration()">
+                Generate Form
+            </button>
+        </div>
+    </div>
